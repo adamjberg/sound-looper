@@ -42,25 +42,29 @@ async function run() {
    guitarGainNode.connect(audioContext.destination); // Connect gain node to destination
 }
 
-function activateDrums() {
+function activateDrums(e) {
+  e.preventDefault();
   drumsEnabled = true;
   drumGainNode.gain.value = 1;
   toggleButtonColor(drumsBtn, drumsEnabled);
 }
 
-function deactivateDrums() {
+function deactivateDrums(e) {
+  e.preventDefault();
   drumsEnabled = false;
   drumGainNode.gain.value = 0;
   toggleButtonColor(drumsBtn, drumsEnabled);
 }
 
-function activateGuitar() {
+function activateGuitar(e) {
+  e.preventDefault();
   guitarEnabled = true;
   guitarGainNode.gain.value = 1;
   toggleButtonColor(guitarBtn, guitarEnabled);
 }
 
-function deactivateGuitar() {
+function deactivateGuitar(e) {
+  e.preventDefault();
   guitarEnabled = false;
   guitarGainNode.gain.value = 0;
   toggleButtonColor(guitarBtn, guitarEnabled);

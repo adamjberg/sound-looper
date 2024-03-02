@@ -1,15 +1,25 @@
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="index.js" defer></script>
   <style>
-    html, body {
+    html,
+    body {
+      -webkit-user-select: none;
+      /* Safari */
+      -moz-user-select: none;
+      /* Firefox */
+      -ms-user-select: none;
+      /* IE10+/Edge */
       user-select: none;
+      /* Standard */
     }
 
-    #drums, #guitar {
+    #drums,
+    #guitar {
       border: 1px solid black;
       width: 100px;
       height: 100px;
@@ -21,6 +31,7 @@
     }
   </style>
 </head>
+
 <body>
   <button id="play">Play</button>
   <div style="display: flex">
@@ -28,4 +39,5 @@
     <div id="guitar"></div>
   </div>
 </body>
+
 </html>
