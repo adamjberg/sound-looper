@@ -7,9 +7,9 @@ let guitarEnabled = false;
 
 let guitarSource = null;
 let drumSource = null;
+let drumGainNode = null;
 
 async function run() {
-   // Create an AudioContext instance
    const audioContext = new AudioContext();
 
    const drumLoopResponse = await fetch("/drum-loop.mp3");
@@ -22,7 +22,11 @@ async function run() {
 
    drumSource = audioContext.createBufferSource();
    drumSource.buffer = drumLoop;
-   drumSource.connect(audioContext.destination);
+   
+   // Create gain node for drums
+   drumGainNode = audioContext.createGain();
+   drumSource.connect(drumGainNode);
+   drumGainNode.connect(audioContext.destination); // Connect gain node to destination
 
    guitarSource = audioContext.createBufferSource();
    guitarSource.buffer = guitarLoop;
@@ -31,6 +35,15 @@ async function run() {
 
 drumsBtn.addEventListener("click", () => {
   drumsEnabled = !drumsEnabled;
+
+  console.log(drumsEnabled)
+  
+  // Mute or unmute the drums based on drumsEnabled
+  if (drumsEnabled) {
+    drumGainNode.gain.value = 1; // Unmute drums
+  } else {
+    drumGainNode.gain.value = 0; // Mute drums
+  }
 });
 
 guitarBtn.addEventListener("click", () => {
