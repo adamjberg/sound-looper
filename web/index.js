@@ -3,11 +3,12 @@ const drumsBtn = document.getElementById("drums");
 const guitarBtn = document.getElementById("guitar");
 
 let drumsEnabled = true;
-let guitarEnabled = false;
+let guitarEnabled = true;
 
 let guitarSource = null;
 let drumSource = null;
 let drumGainNode = null;
+let guitarGainNode = null; // Added gain node for guitar
 
 async function run() {
    const audioContext = new AudioContext();
@@ -25,29 +26,38 @@ async function run() {
    
    // Create gain node for drums
    drumGainNode = audioContext.createGain();
+   drumGainNode.gain.value = 0;
    drumSource.connect(drumGainNode);
-   drumGainNode.connect(audioContext.destination); // Connect gain node to destination
+   drumGainNode.connect(audioContext.destination);
 
    guitarSource = audioContext.createBufferSource();
    guitarSource.buffer = guitarLoop;
-   guitarSource.connect(audioContext.destination);
+   
+   // Create gain node for guitar
+   guitarGainNode = audioContext.createGain();
+   guitarGainNode.gain.value = 0;
+   guitarSource.connect(guitarGainNode);
+   guitarGainNode.connect(audioContext.destination); // Connect gain node to destination
 }
 
-drumsBtn.addEventListener("click", () => {
-  drumsEnabled = !drumsEnabled;
-
-  console.log(drumsEnabled)
-  
-  // Mute or unmute the drums based on drumsEnabled
-  if (drumsEnabled) {
-    drumGainNode.gain.value = 1; // Unmute drums
-  } else {
-    drumGainNode.gain.value = 0; // Mute drums
-  }
+drumsBtn.addEventListener("mousedown", () => {
+  drumsEnabled = true;
+  drumGainNode.gain.value = 1;
 });
 
-guitarBtn.addEventListener("click", () => {
-  guitarEnabled = !guitarEnabled;
+drumsBtn.addEventListener("mouseup", () => {
+  drumsEnabled = false;
+  drumGainNode.gain.value = 0;
+});
+
+guitarBtn.addEventListener("mousedown", () => {
+  guitarEnabled = true;
+  guitarGainNode.gain.value = 1;
+});
+
+guitarBtn.addEventListener("mouseup", () => {
+  guitarEnabled = false;
+  guitarGainNode.gain.value = 0;
 });
 
 playBtn.addEventListener("click", async () => {
