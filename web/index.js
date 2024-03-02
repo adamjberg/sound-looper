@@ -11,6 +11,7 @@ let drumGainNode = null;
 let guitarGainNode = null; 
 
 async function run() {
+  try {
    const audioContext = new AudioContext();
 
    const drumLoopResponse = await fetch("/drum-loop.mp3");
@@ -40,6 +41,11 @@ async function run() {
    guitarGainNode.gain.value = 0;
    guitarSource.connect(guitarGainNode);
    guitarGainNode.connect(audioContext.destination); // Connect gain node to destination
+
+   alert("end of run")
+  } catch(err) {
+    alert(err.message);
+  }
 }
 
 function activateDrums(e) {
