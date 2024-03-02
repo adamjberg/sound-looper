@@ -8,9 +8,10 @@ let guitarEnabled = true;
 let guitarSource = null;
 let drumSource = null;
 let drumGainNode = null;
-let guitarGainNode = null; // Added gain node for guitar
+let guitarGainNode = null; 
 
 async function run() {
+  try {
    const audioContext = new AudioContext();
 
    const drumLoopResponse = await fetch("/drum-loop.mp3");
@@ -40,35 +41,48 @@ async function run() {
    guitarGainNode.gain.value = 0;
    guitarSource.connect(guitarGainNode);
    guitarGainNode.connect(audioContext.destination); // Connect gain node to destination
+  } catch(err) {
+    alert(err.message);
+  }
 }
 
-drumsBtn.addEventListener("mousedown", (e) => {
+function activateDrums(e) {
   e.preventDefault();
   drumsEnabled = true;
   drumGainNode.gain.value = 1;
   toggleButtonColor(drumsBtn, drumsEnabled);
-});
+}
 
-drumsBtn.addEventListener("mouseup", (e) => {
+function deactivateDrums(e) {
   e.preventDefault();
   drumsEnabled = false;
   drumGainNode.gain.value = 0;
   toggleButtonColor(drumsBtn, drumsEnabled);
-});
+}
 
-guitarBtn.addEventListener("mousedown", (e) => {
+function activateGuitar(e) {
   e.preventDefault();
   guitarEnabled = true;
   guitarGainNode.gain.value = 1;
   toggleButtonColor(guitarBtn, guitarEnabled);
-});
+}
 
-guitarBtn.addEventListener("mouseup", (e) => {
+function deactivateGuitar(e) {
   e.preventDefault();
   guitarEnabled = false;
   guitarGainNode.gain.value = 0;
   toggleButtonColor(guitarBtn, guitarEnabled);
-});
+}
+
+drumsBtn.addEventListener("mousedown", activateDrums);
+drumsBtn.addEventListener("touchstart", activateDrums);
+drumsBtn.addEventListener("mouseup", deactivateDrums);
+drumsBtn.addEventListener("touchend", deactivateDrums);
+
+guitarBtn.addEventListener("mousedown", activateGuitar);
+guitarBtn.addEventListener("touchstart", activateGuitar);
+guitarBtn.addEventListener("mouseup", deactivateGuitar);
+guitarBtn.addEventListener("touchend", deactivateGuitar);
 
 playBtn.addEventListener("click", async () => {
   try {
