@@ -23,6 +23,7 @@ async function run() {
 
    drumSource = audioContext.createBufferSource();
    drumSource.buffer = drumLoop;
+   drumSource.loop = true;
    
    // Create gain node for drums
    drumGainNode = audioContext.createGain();
@@ -32,6 +33,7 @@ async function run() {
 
    guitarSource = audioContext.createBufferSource();
    guitarSource.buffer = guitarLoop;
+   guitarSource.loop = true;
    
    // Create gain node for guitar
    guitarGainNode = audioContext.createGain();
@@ -43,21 +45,25 @@ async function run() {
 drumsBtn.addEventListener("mousedown", () => {
   drumsEnabled = true;
   drumGainNode.gain.value = 1;
+  toggleButtonColor(drumsBtn, drumsEnabled);
 });
 
 drumsBtn.addEventListener("mouseup", () => {
   drumsEnabled = false;
   drumGainNode.gain.value = 0;
+  toggleButtonColor(drumsBtn, drumsEnabled);
 });
 
 guitarBtn.addEventListener("mousedown", () => {
   guitarEnabled = true;
   guitarGainNode.gain.value = 1;
+  toggleButtonColor(guitarBtn, guitarEnabled);
 });
 
 guitarBtn.addEventListener("mouseup", () => {
   guitarEnabled = false;
   guitarGainNode.gain.value = 0;
+  toggleButtonColor(guitarBtn, guitarEnabled);
 });
 
 playBtn.addEventListener("click", async () => {
@@ -68,5 +74,13 @@ playBtn.addEventListener("click", async () => {
     console.error("Error loading or playing audio:", error);
   }
 });
+
+function toggleButtonColor(button, isEnabled) {
+  if (isEnabled) {
+    button.classList.add('active');
+  } else {
+    button.classList.remove('active');
+  }
+}
 
 run();

@@ -5,17 +5,27 @@
   <title>Document</title>
   <script src="index.js" defer></script>
   <style>
+    html, body {
+      user-select: none;
+    }
+
     #drums, #guitar {
       border: 1px solid black;
-      padding: 100px;
+      width: 100px;
+      height: 100px;
+      user-select: none;
+    }
+
+    .active {
+      background-color: #FF0000;
     }
   </style>
 </head>
 <body>
   <button id="play">Play</button>
   <div style="display: flex">
-    <div id="drums">Drum</div>
-    <div id="guitar">Guitar</div>
+    <div id="drums"></div>
+    <div id="guitar"></div>
   </div>
 </body>
 </html>
