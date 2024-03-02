@@ -42,25 +42,29 @@ async function run() {
    guitarGainNode.connect(audioContext.destination); // Connect gain node to destination
 }
 
-drumsBtn.addEventListener("mousedown", () => {
+drumsBtn.addEventListener("mousedown", (e) => {
+  e.preventDefault();
   drumsEnabled = true;
   drumGainNode.gain.value = 1;
   toggleButtonColor(drumsBtn, drumsEnabled);
 });
 
-drumsBtn.addEventListener("mouseup", () => {
+drumsBtn.addEventListener("mouseup", (e) => {
+  e.preventDefault();
   drumsEnabled = false;
   drumGainNode.gain.value = 0;
   toggleButtonColor(drumsBtn, drumsEnabled);
 });
 
-guitarBtn.addEventListener("mousedown", () => {
+guitarBtn.addEventListener("mousedown", (e) => {
+  e.preventDefault();
   guitarEnabled = true;
   guitarGainNode.gain.value = 1;
   toggleButtonColor(guitarBtn, guitarEnabled);
 });
 
-guitarBtn.addEventListener("mouseup", () => {
+guitarBtn.addEventListener("mouseup", (e) => {
+  e.preventDefault();
   guitarEnabled = false;
   guitarGainNode.gain.value = 0;
   toggleButtonColor(guitarBtn, guitarEnabled);
